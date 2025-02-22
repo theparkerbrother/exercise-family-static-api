@@ -80,17 +80,15 @@ def add_member():
     jackson_family.add_member(member)
     return jsonify(member), 201
 
-
-
-
-#def add_new_todo():
-    # request_body = request.get_json(force=True)
-    # print("Incoming request with the following body", request_body)
-    # todos.append(request_body)
-    # return jsonify(todos)
-
-
 #4 DELETE one member
+@app.route('/member/<int:member_id>', methods=['DELETE'])
+def delete_member(member_id):
+    member = jackson_family.get_member(member_id)
+    if member:
+        jackson_family.delete_member(member_id)
+        return jsonify({"message": f"Family Member with ID {member_id} deleted successfully"}), 204
+    else:
+        return jsonify({"error": "Member not found"}), 404
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
